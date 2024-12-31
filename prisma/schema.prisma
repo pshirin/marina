@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Logo {
+  id      Int      @id @default(autoincrement())
+  url     String
+  project Project? @relation("ProjectLogo")
+}
+
+model Poster {
+  id        Int      @id @default(autoincrement())
+  url       String
+  project   Project? @relation("ProjectPosters", fields: [projectId], references: [id])
+  projectId Int?
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  posters     Poster[] @relation("ProjectPosters")
+  logo        Logo?    @relation("ProjectLogo", fields: [logoId], references: [id])
+  content     String?
+  logoId      Int?     @unique
+  published   Boolean  @default(false)
+}
+
+model Admin {
+  id       Int     @id @default(autoincrement())
+  name     String
+  password String
+  token    String?
+}
+
+model About {
+  id      Int     @id @default(autoincrement())
+  content String?
+}
