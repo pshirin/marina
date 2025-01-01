@@ -17,8 +17,8 @@ export async function createProject(formData: FormData) {
   }
 
   const logo = formData.get("logo");
-  const prodUrl = formData.get("prodUrl");
-  const tags = formData.getAll("tags");
+  // const prodUrl = formData.get("prodUrl");
+  // const tags = formData.getAll("tags");
 
   assert(typeof name === "string", "title is required");
   assert(typeof description === "string", "description is required");

@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import { assert, generateToken } from "@/utils";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
 
 export async function login(formData: FormData) {
   const login = formData.get("login");
