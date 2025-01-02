@@ -15,12 +15,14 @@ export const Slider = ({ imgs, onDelete, autoplay }: Props) => {
     <Swiper
       spaceBetween={10}
       modules={[Autoplay]}
-      className="bg-pink-100 rounded-[44px] relative"
+      className="bg-pink-100 rounded-[44px] h-[500px] w-full"
+      lazyPreloadPrevNext={1}
       slidesPerView={1}
       scrollbar={{ draggable: true }}
       autoplay={{ ...autoplay, pauseOnMouseEnter: true }}
       speed={700}
-      updateOnWindowResize
+      grabCursor
+      onSlideChange={(swiper) => isNaN(swiper.realIndex) && swiper.slideTo(0)}
     >
       {imgs.map((img, index) => (
         <SwiperSlide key={img}>
@@ -28,15 +30,16 @@ export const Slider = ({ imgs, onDelete, autoplay }: Props) => {
             className="rounded-[44px]"
             src={img}
             alt=""
-            width={1000}
+            fill
+            fetchPriority="high"
             priority
-            height={537}
+            style={{ objectFit: "cover", objectPosition: "center center" }}
           />
 
           {onDelete && (
             <button
               type="submit"
-              className="text-red-500 hover:text-red-600 absolute top-4 right-4 z-999"
+              className="text-red-500 hover:text-red-600 absolute top-4 right-4 z-10"
               onClick={() => onDelete(index)}
             >
               <svg

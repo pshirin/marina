@@ -3,12 +3,15 @@ import cloudinary from "@/lib/cloudinary";
 import { assert } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
+import prisma from "@/lib/prisma";
 const MAX_PER_SLIDER = 10;
 
 export async function createProject(formData: FormData) {
   const name = formData.get("name");
   const description = formData.get("description");
+  const logo = formData.get("logo");
+  const prodUrl = formData.get("prodUrl");
+  const tags = formData.get("tags-arr");
   const posters = [];
   for (let i = 0; i < MAX_PER_SLIDER; i++) {
     const poster = formData.get(`poster-${i}`);
@@ -16,11 +19,9 @@ export async function createProject(formData: FormData) {
     posters.push(poster);
   }
 
-  const logo = formData.get("logo");
-  // const prodUrl = formData.get("prodUrl");
-  // const tags = formData.getAll("tags");
-
   assert(typeof name === "string", "title is required");
+  assert(typeof prodUrl === "string", "prodUrl is required");
+  assert(typeof tags === "string", "tags is required");
   assert(typeof description === "string", "description is required");
   assert(posters.length, "poster is required");
   assert(logo instanceof File && logo.size, "logo is required");
@@ -50,6 +51,8 @@ export async function createProject(formData: FormData) {
     data: {
       name,
       description,
+      prodUrl,
+      tags,
       published: false,
       ...(posterId ? { posters: { connect: { id: posterId } } } : {}),
       ...(logoId ? { logo: { connect: { id: logoId } } } : {}),

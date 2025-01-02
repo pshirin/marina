@@ -11,7 +11,7 @@ export const CreateProjectButton = async () => {
     <Link
       href="/?modal=create"
       scroll={false}
-      className="mt-4 px-4 py-2 bg-pink-500 text-white rounded-full fixed bottom-4 right-4 z-1"
+      className="mt-4 px-4 py-2 bg-pink-500 text-white rounded-full fixed bottom-4 right-4 z-10"
     >
       Добавить
     </Link>

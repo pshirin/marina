@@ -8,15 +8,21 @@ import { useState } from "react";
 
 export const CreateProjectModalForm = () => {
   const [posters, setPosters] = useState<File[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const changeSliderHandler = (e: File[]) => {
     setPosters(e);
   };
+  const changeTagsHandler = (e: string[]) => {
+    setTags(e);
+  };
+
   const submitHandler = async (formData: FormData) => {
     posters.forEach((p, i) => formData.append(`poster-${i}`, p));
+    formData.append("tags-arr", JSON.stringify(tags));
     await createProject(formData);
   };
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-sm backdrop-brightness-50 z-50" >
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-sm backdrop-brightness-50 z-50">
       <form
         action={submitHandler}
         className="flex flex-col gap-4 bg-white p-10 border border-pink-300 rounded-2xl z-10 w-3/4 max-h-full overflow-y-auto"
@@ -74,7 +80,7 @@ export const CreateProjectModalForm = () => {
         </div>
         <SliderInput onChange={changeSliderHandler} />
         <LogoInput />
-        <TagsInput />
+        <TagsInput onChange={changeTagsHandler} />
         <div className="flex justify-between">
           <Link
             className="mt-4 px-4 py-2 bg-black text-white rounded-full"

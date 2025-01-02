@@ -1,14 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export const TagsInput = () => {
+interface Props {
+  onChange?: (tags: string[]) => void;
+}
+export const TagsInput = ({ onChange }: Props) => {
   const [tags, setTags] = useState<string[]>([]);
   const [tag, setTag] = useState<string>("");
   const handleAddTag = () => {
     setTags([...tags, tag]);
     setTag("");
   };
-
+  useEffect(() => {
+    onChange?.(tags);
+  }, [tags]);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTag(e.target.value);
   };

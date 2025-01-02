@@ -8,7 +8,7 @@ export const DeleteProjectButton = async ({ projectId }: Props) => {
   const isAuth = await getIsAuth();
   if (!isAuth) return null;
   return (
-    <form action={deleteProject} className="absolute bottom-0 right-0 z-999">
+    <form action={deleteProject} className="absolute top-3 right-6 z-10">
       <input type="hidden" name="id" value={projectId} />
       <button type="submit" className="text-red-500 hover:text-red-600">
         <svg

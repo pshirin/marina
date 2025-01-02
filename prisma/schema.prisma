@@ -32,6 +32,8 @@ model Project {
   content     String?
   logoId      Int?     @unique
   published   Boolean  @default(false)
+  tags        String?
+  prodUrl     String?
 }
 
 model Admin {

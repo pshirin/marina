@@ -14,7 +14,7 @@ export default async function Home() {
   });
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-14">
       {projects.map((e) => (
         <ProjectCard key={e.id} {...e} />
       ))}
